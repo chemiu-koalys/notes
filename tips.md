@@ -103,6 +103,13 @@ https://stackoverflow.com/q/37914702
 ### [migration](https://guides.rubyonrails.org/active_record_migrations.html)
 ```bin/rails generate migration AddPartNumberToProducts```
 
+
+## working on koalys-services
+1. run `DEV=true nodemon server.js` in services-audyx folder
+2. in server env change to use local  change `SERVICES_AUDYX_URL=services-audyx-dev.herokuapp.com` to `SERVICES_AUDYX_URL=local.koalys.com:5001`
+3. add somewhere in clojure the code to epxose the services for the console as a window object `(! js/window.theSocket socket)`
+4. check from the console that it works data = `{room:"local#eb@audyx.com","user-email":"test.eb3@koalys.com",data:{}}`
+`theSocket.emit("audyx::session::remote-calibration::exit",data)`
   
 ##  Checking heroku logs
 ---
@@ -174,6 +181,56 @@ Retreiving refd component value:
     (when new-contact
       (om/transact! data :contacts #(conj % new-contact)))))
 ```
-
+# Misc
 ## creating super admin
 ```Superadmin.new(user_id:14, created_at: DateTime.now, updated_at: DateTime.now).save```
+
+## finding patients
+### cljs
+```
+ (defn id->hash [id]
+  (->
+    (* id 317)
+    (+ 171)))
+(defn hash->id [hash]
+  (->
+    (- hash 171)
+    (/ 317)))
+```  
+### bash
+```
+chemiu@DESKTOP-7CHTJ2C:~$ more hashToId.sh
+echo $((($1 -171) / 317))
+chemiu@DESKTOP-7CHTJ2C:~$ . hashToId.sh 16272732
+51333
+chemiu@DESKTOP-7CHTJ2C:~$ more idToHash.sh
+echo $(($1*317 -171))
+chemiu@DESKTOP-7CHTJ2C:~$ . idToHash.sh 51333
+16272390
+```
+### console
+```localStorage.audyxPatient```
+
+## QuickCalibration snippet
+[addSnippet](https://developer.chrome.com/docs/devtools/javascript/snippets/)
+```
+// Define the keys
+const keysToSmallerThanOne = ['[:audio :calibration :min-calibration-delta]',
+'[:audio :calibration :tonal-duration-ratio]',
+'[:audio :calibration :ramp-duration-in-sec]',
+'[:audio :microphone :slot-durations :calibration]',
+'[:audio :calibration :max-calibration-rounds]'
+];
+const maxKeyToChange = '[:audio :calibration :max-calibration-delta]';
+
+//do the changes
+const smallTime = 0.001;
+const bigDelta = 150;
+
+localStorage['[:audio :calibration :calibration-duration]']=1
+localStorage[maxKeyToChange] = bigDelta;
+keysToSmallerThanOne.map(key => {
+  localStorage[key] = smallTime;
+});
+```
+https://audio.koalys.com/?audio.microphone.mic-label&language=en#/audio-setup
