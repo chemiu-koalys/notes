@@ -1,9 +1,9 @@
 # Tips
 ## deployment
-`git remote add alpha https://git.heroku.com/audyx-alpha.git`
-`git remote add beta https://git.heroku.com/audyx-beta.git`
-`git remote add production https://git.heroku.com/audyx.git`
-`git remote add us-production https://git.heroku.com/audyx-us.git`
+`git remote add alpha https://git.heroku.com/audyx-alpha.git`  
+`git remote add beta https://git.heroku.com/audyx-beta.git`  
+`git remote add production https://git.heroku.com/audyx.git`  
+`git remote add us-production https://git.heroku.com/audyx-us.git`  
 
 ---
 `git checkout branch`
