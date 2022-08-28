@@ -234,3 +234,7 @@ keysToSmallerThanOne.map(key => {
 });
 ```
 https://audio.koalys.com/?audio.microphone.mic-label&language=en#/audio-setup
+
+### sigma credentials
+nechemya.ungar@audyx.com
+tgpaWu86Us5vMi
