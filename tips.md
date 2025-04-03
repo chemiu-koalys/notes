@@ -238,3 +238,27 @@ https://audio.koalys.com/?audio.microphone.mic-label&language=en#/audio-setup
 ### sigma credentials
 nechemya.ungar@audyx.com
 tgpaWu86Us5vMi!
+
+# ssm bouncing
+bouncing connections through bastion host
+## redis
+### redis shared bastion
+```bash
+aws ssm start-session \
+    --target i-05481c02fabff3274 \
+    --profile sbxp-dev \
+    --region eu-west-1 \
+    --document-name AWS-StartPortForwardingSessionToRemoteHost \
+    --parameters '{"host":["redis-shared.cver5c.0001.euw1.cache.amazonaws.com"],"portNumber":["6379"],"localPortNumber":["7379"]}'
+```
+
+## postgres
+### postgres shared bastion 
+```bash
+aws ssm start-session \
+    --target i-05481c02fabff3274 \
+    --profile sbxp-dev \
+    --region eu-west-1 \
+    --document-name AWS-StartPortForwardingSessionToRemoteHost \
+    --parameters '{"host":["db-shared.cxu0e6io8si0.eu-west-1.rds.amazonaws.com"],"portNumber":["5432"],"localPortNumber":["6432"]}'
+```
